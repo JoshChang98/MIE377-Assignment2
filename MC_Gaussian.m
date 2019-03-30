@@ -53,17 +53,14 @@ for i = 1:nPaths
     for j = 1:N
         
         % Convert the independent RVs to correlated RVs
-        xi = L * randn(2, 1); 
+        xi = L * randn(k, 1); 
        
         for k = 1 : n
         
-        %S{k}(j+1, i) = S{k}(j, i) * exp( ( mu_FF(k) - 0.5 * (sigmaQ(k))^2 ) * dt ...
-        %                + sigmaQ(k) * sqrt(dt) * xi(k) );
+       
         S{k}(j+1, i) = S{k}(j, i) + S{k}(j, i) * ...
                                         mvnrnd(dt * mu_FF(k), dt * (sigmaQ(k))^2);
         
-        %discS_A2(j+1, i) = discS_A2(j, i) + discS_A2(j, i) * ...
-         %                               mvnrnd(dt * mu_A, dt * sigma_A^2);
         end  
     end
 end 
@@ -78,4 +75,5 @@ title('Stock A Price Evolution (Discrete)', 'FontSize', 14)
 ylabel('Stock Price','interpreter','latex','FontSize',12);
 xlabel('Time','interpreter','latex','FontSize',12);
 xlim([0 N])
+
 end
