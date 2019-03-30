@@ -78,3 +78,4 @@ title('Stock A Price Evolution (Discrete)', 'FontSize', 14)
 ylabel('Stock Price','interpreter','latex','FontSize',12);
 xlabel('Time','interpreter','latex','FontSize',12);
 xlim([0 N])
+end
