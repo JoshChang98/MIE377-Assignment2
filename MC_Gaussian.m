@@ -1,16 +1,16 @@
-function [S] = MC_Gaussian(initPrice,mu_FF, Q_FF)
+%function [S] = MC_Gaussian(initPrice,mu_FF, Q_FF)
 clc
 clear all
 format long
 
-% %%%%%%%%%%TEST PARAMETERS DELETE THIS CODE ONCE FINISHED TESTING
-% % Stock  parameters (weekly)
-% initPrice    = [100; 150];          % Initial price of stock A
-% mu_FF    = [0.1 / 100; 0.2/100];    % expected return
-% Q_FF = [0.000064 0.0000576; 0.0000576 0.000144];    % covariance matrix
-% 
-% 
-% %%%%%%%%%%TEST PARAMETERS DELETE THIS CODE ONCE FINISHED TESTING
+%%%%%%%%%%TEST PARAMETERS DELETE THIS CODE ONCE FINISHED TESTING
+% Stock  parameters (weekly)
+initPrice    = [100; 150];          % Initial price of stock A
+mu_FF    = [0.1 / 100; 0.2/100];    % expected return
+Q_FF = [0.000064 0.0000576; 0.0000576 0.000144];    % covariance matrix
+
+
+%%%%%%%%%%TEST PARAMETERS DELETE THIS CODE ONCE FINISHED TESTING
 
 %This function calculates stock price scenarios using the Gaussian Monte
 %Carlo simulations
@@ -29,7 +29,9 @@ sigmaQ = sqrt(diag(Q_FF)); %standard deviations of assets
 % Number of simulated price paths
 nPaths = 5000;
 
-%% 3. Continuous-time geometric random walk for two correlated stocks
+%--------------------------------------------------------------------------
+% 2.3 Discrete-time approach using the Matlab function 'mvnrnd()'
+% This process behaves in the exact same way as the one above.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Find our correlation transformation matrix L
@@ -58,21 +60,24 @@ for i = 1:nPaths
        
         for k = 1 : n
         
-        S{k}(j+1, i) = S{k}(j, i) * exp( ( mu_FF(k) - 0.5 * (sigmaQ(k))^2 ) * dt ...
-                        + sigmaQ(k) * sqrt(dt) * xi(k) );
+        %S{k}(j+1, i) = S{k}(j, i) * exp( ( mu_FF(k) - 0.5 * (sigmaQ(k))^2 ) * dt ...
+        %                + sigmaQ(k) * sqrt(dt) * xi(k) );
+        S{k}(j+1, i) = S{k}(j, i) + S{k}(j, i) * ...
+                                        mvnrnd(dt * mu_FF(k), dt * (sigmaQ(k))^2);
         
+        %discS_A2(j+1, i) = discS_A2(j, i) + discS_A2(j, i) * ...
+         %                               mvnrnd(dt * mu_A, dt * sigma_A^2);
         end  
     end
 end 
 
 
 %--------------------------------------------------------------------------
-% 3.2 Plot the paths of all the simulations for Stock A
+% 2.4 Plot the paths of all the simulations 
 %--------------------------------------------------------------------------
-fig3 = figure(3);
-
+fig2 = figure(2);
 plot(0:N, S{1})
-title('Stock A Price Evolution (Continuous)', 'FontSize', 14)
+title('Stock A Price Evolution (Discrete)', 'FontSize', 14)
 ylabel('Stock Price','interpreter','latex','FontSize',12);
 xlabel('Time','interpreter','latex','FontSize',12);
 xlim([0 N])
