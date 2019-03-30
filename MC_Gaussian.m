@@ -1,16 +1,13 @@
-%function [S] = MC_Gaussian(initPrice,mu_FF, Q_FF)
-clc
-clear all
-format long
+function [S] = MC_Gaussian(initPrice,mu_FF, Q_FF)
 
-%%%%%%%%%%TEST PARAMETERS DELETE THIS CODE ONCE FINISHED TESTING
-% Stock  parameters (weekly)
-initPrice    = [100; 150];          % Initial price of stock A
-mu_FF    = [0.1 / 100; 0.2/100];    % expected return
-Q_FF = [0.000064 0.0000576; 0.0000576 0.000144];    % covariance matrix
-
-
-%%%%%%%%%%TEST PARAMETERS DELETE THIS CODE ONCE FINISHED TESTING
+% %%%%%%%%%%TEST PARAMETERS DELETE THIS CODE ONCE FINISHED TESTING
+% % Stock  parameters (weekly)
+% initPrice    = [100; 150];          % Initial price of stock A
+% mu_FF    = [0.1 / 100; 0.2/100];    % expected return
+% Q_FF = [0.000064 0.0000576; 0.0000576 0.000144];    % covariance matrix
+% 
+% 
+% %%%%%%%%%%TEST PARAMETERS DELETE THIS CODE ONCE FINISHED TESTING
 
 %This function calculates stock price scenarios using the Gaussian Monte
 %Carlo simulations
